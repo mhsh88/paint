@@ -1,5 +1,7 @@
 package loginCheck;
 
+import dataBase.Sql;
+
 public class LoginCheck {
 
 	private String userName;
@@ -32,7 +34,8 @@ public class LoginCheck {
 	}
 
 	private void checkUserAndPass(String userName, String pass) {
-		if (userName.equals("admin") && pass.equals("admin")) {
+		
+		if (Sql.getUser(userName, pass)) {
 			setAthorized(true);
 		}
 		else setAthorized(false);

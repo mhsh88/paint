@@ -48,19 +48,21 @@ public class Sql {
 		}
 	}
 
-	public static void getUser(String userName, String passWord) {
+	public static boolean getUser(String userName, String passWord) {
 		String sql = "select id from `paintdb`.`user` where username = '" + userName + "' and password = '" + passWord + "' ";
 		System.out.println(sql);
+		boolean result = false;
 		try {
 			ResultSet rs = db.doQuery(sql);
 			while(rs.next()) {
-				System.out.println("hi");
+				result = true;
 			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 }
