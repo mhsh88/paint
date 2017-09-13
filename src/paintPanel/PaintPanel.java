@@ -225,24 +225,24 @@ public class PaintPanel extends JPanel {
 			shape = "Line";
 		switch (shape) {
 		case "Circle":
-			paintingShape = new Circle(getColorToDraw(), getStartPoint(), getEndPoint(), graphicsForDrawing,
-					getUserName());
+			paintingShape = new Circle(getColorToDraw(), getStartPoint(), getEndPoint(), MainFrame.isFill(),
+					graphicsForDrawing, getUserName());
 			break;
 		case "Rectangle":
-			paintingShape = new Rectangle(getColorToDraw(), getStartPoint(), getEndPoint(), graphicsForDrawing,
-					getUserName());
+			paintingShape = new Rectangle(getColorToDraw(), getStartPoint(), getEndPoint(), MainFrame.isFill(),
+					graphicsForDrawing, getUserName());
 			break;
 		case "Ellipse":
-			paintingShape = new Ellipse(getColorToDraw(), getStartPoint(), getEndPoint(), graphicsForDrawing,
-					getUserName());
+			paintingShape = new Ellipse(getColorToDraw(), getStartPoint(), getEndPoint(), MainFrame.isFill(),
+					graphicsForDrawing, getUserName());
 			break;
 		case "Square":
-			paintingShape = new Square(getColorToDraw(), getStartPoint(), getEndPoint(), graphicsForDrawing,
-					getUserName());
+			paintingShape = new Square(getColorToDraw(), getStartPoint(), getEndPoint(), MainFrame.isFill(),
+					graphicsForDrawing, getUserName());
 			break;
 		case "Line":
-			paintingShape = new Line(getColorToDraw(), getStartPoint(), getEndPoint(), graphicsForDrawing,
-					getUserName());
+			paintingShape = new Line(getColorToDraw(), getStartPoint(), getEndPoint(), MainFrame.isFill(),
+					graphicsForDrawing, getUserName());
 			// g.drawLine(startPoint.getX(), startPoint.getY(), endPoint.getX(),
 			// endPoint.getY());
 			break;

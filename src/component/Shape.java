@@ -28,24 +28,33 @@ public abstract class Shape extends JComponent {
 	protected Point point2;
 	protected Color color;
 	protected String userName;
+	private boolean fill;
 	public String getUserName() {
 		return userName;
 	}
 	protected Graphics graphic;
 	protected Drawable drawShape = new Drawable();
-	public Shape(Color color, Point point1, Point point2, Graphics g, String userName) {
+	
+	public Shape(Color color, Point point1, Point point2, boolean fill, Graphics g, String userName) {
 		super();
 		this.point1 = point1;
 		this.point2 = point2;
 		this.color = color;
 		this.userName = userName;
 		this.graphic = g;
+		this.setFill(fill);
 		drawShape(g);
 	}
 	public Graphics getGraphic() {
 		return graphic;
 	}
 	public abstract void drawShape(Graphics g);
+	public boolean isFill() {
+		return fill;
+	}
+	protected void setFill(boolean fill) {
+		this.fill = fill;
+	}
 	
 	
 

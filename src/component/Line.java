@@ -5,8 +5,8 @@ import java.awt.Graphics;
 
 public class Line extends Shape {
 
-	public Line(Color color, Point point1, Point point2,Graphics g,String userName) {
-		super(color, point1, point2, g, userName);
+	public Line(Color color, Point point1, Point point2,boolean fill, Graphics g,String userName) {
+		super(color, point1, point2,fill, g, userName);
 		
 		
 		// TODO Auto-generated constructor stub

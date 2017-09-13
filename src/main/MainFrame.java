@@ -26,7 +26,14 @@ public class MainFrame extends JFrame {
 	static Color color = Color.black;
 	static String shapeToDraw;
 	private String userName;
+	private static boolean fill = false;
 
+	public static boolean isFill() {
+		return fill;
+	}
+	public void setFill(boolean fill) {
+		MainFrame.fill = fill;
+	}
 	public String getUserName() {
 		return this.userName;
 	}
@@ -157,6 +164,17 @@ public class MainFrame extends JFrame {
 		panel.add(btnColor);
 
 		JButton btnFill = new JButton("Fill");
+		btnFill.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(isFill()) setFill(false);
+				else setFill(true);
+				
+				
+			}
+		});
+		
 		panel.add(btnFill);
 		btnColor.addActionListener(new ActionListener() {
 			@Override

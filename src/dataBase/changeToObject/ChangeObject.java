@@ -35,6 +35,7 @@ public class ChangeObject {
 		this.point1 = shape.getPoint1();
 		this.point2 = shape.getPoint2();
 		this.color = shape.getColor();
+		this.fill = shape.isFill();
 		this.type = shape.getClass().getSimpleName().toString();
 		this.userName = shape.getUserName();
 

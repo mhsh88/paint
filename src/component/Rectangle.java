@@ -10,8 +10,8 @@ public class Rectangle extends Shape {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public Rectangle(Color color, Point point1, Point point2, Graphics g,String userName) {
-		super(color, point1, point2, g, userName);
+	public Rectangle(Color color, Point point1, Point point2, boolean fill, Graphics g, String userName) {
+		super(color, point1, point2, fill, g, userName);
 
 	}
 
@@ -19,7 +19,10 @@ public class Rectangle extends Shape {
 	public void drawShape(Graphics g) {
 
 		g.setColor(color);
-		g.drawRect(point1.getX(), point1.getY(), point2.getX(), point2.getY());
+		if (isFill())
+			g.fillRect(point1.getX(), point1.getY(), point2.getX(), point2.getY());
+		else
+			g.drawRect(point1.getX(), point1.getY(), point2.getX(), point2.getY());
 	}
 
 }
