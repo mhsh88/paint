@@ -147,7 +147,8 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				panel_1.repaint();
-				panel_1.clearShapeList();
+				panel_1.clearShapeList(getUserName());
+				
 			}
 		});
 		panel.add(btnClear);

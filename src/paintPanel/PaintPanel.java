@@ -42,17 +42,21 @@ public class PaintPanel extends JPanel {
 	private static Point startPoint;
 	private Color colorToDraw = MainFrame.getColor();
 	private String userName;
-	
+	private Sql sql = new Sql();
 
 	public String getUserName() {
 		return userName;
 	}
-	
 
 	private ArrayList<Shape> graphics = new ArrayList<>();
 
-	public void clearShapeList() {
+	public void clearShapeList(String userName) {
 		graphics.clear();
+		clearDb(userName);
+	}
+
+	private void clearDb(String userName) {
+		Sql.clear(userName);
 	}
 
 	public static void setStartPoint(Point startPoint) {
@@ -82,11 +86,12 @@ public class PaintPanel extends JPanel {
 	}
 
 	private static final long serialVersionUID = -7779958891210294697L;
-	
+
 	public PaintPanel(String userName) {
 		this();
 		this.userName = userName;
 	}
+
 	public PaintPanel() {
 		super.setBackground(Color.white);
 		setStartPoint(new Point(0, 0));
@@ -100,7 +105,8 @@ public class PaintPanel extends JPanel {
 		super.addMouseMotionListener(new MouseMotionListener() {
 
 			@Override
-			public void mouseMoved(MouseEvent e) {}
+			public void mouseMoved(MouseEvent e) {
+			}
 
 			@Override
 			public void mouseDragged(MouseEvent e) {
@@ -110,14 +116,14 @@ public class PaintPanel extends JPanel {
 					return;
 				}
 
-//				update(getGraphics());
-//				repaint();
+				// update(getGraphics());
+				// repaint();
 
 				// paintComponent(graphicsForDrawing);
 				//
 				// drawDraggedShape();
 				graphicsForDrawing.dispose();
-//				graphicsForDrawing = null;
+				// graphicsForDrawing = null;
 
 				// graphicsForDrawing = null;
 				// graphicsForDrawing.dispose();
@@ -129,7 +135,8 @@ public class PaintPanel extends JPanel {
 		});
 		super.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {}
+			public void mouseClicked(MouseEvent e) {
+			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -152,12 +159,12 @@ public class PaintPanel extends JPanel {
 				}
 
 				graphics.add(drawShape());
-				
-				
+
 				graphics.get(graphics.size() - 1);
-				
-					new Sql(new ChangeObject(graphics.get(graphics.size() - 1),graphics.size()).getShapeString());
-				
+
+				sql.addObjectToDatabase(
+						new ChangeObject(graphics.get(graphics.size() - 1), graphics.size()).getShapeString());
+
 				graphicsForDrawing.dispose();
 				graphicsForDrawing = null;
 
@@ -199,13 +206,13 @@ public class PaintPanel extends JPanel {
 		// endPoint.getY());
 		// g.drawArc(startPoint.getX(), startPoint.getY(), endPoint.getX(),
 		// endPoint.getY(), 0, 360);
-//		 repaint();
+		// repaint();
 
 	}
+
 	@Override
-	public void update( Graphics g )
-	{
-	  paint( g );
+	public void update(Graphics g) {
+		paint(g);
 	}
 
 	private Shape drawShape() {
@@ -218,19 +225,24 @@ public class PaintPanel extends JPanel {
 			shape = "Line";
 		switch (shape) {
 		case "Circle":
-			paintingShape = new Circle(getColorToDraw(), getStartPoint(), getEndPoint(), graphicsForDrawing,getUserName());
+			paintingShape = new Circle(getColorToDraw(), getStartPoint(), getEndPoint(), graphicsForDrawing,
+					getUserName());
 			break;
 		case "Rectangle":
-			paintingShape = new Rectangle(getColorToDraw(), getStartPoint(), getEndPoint(), graphicsForDrawing,getUserName());
+			paintingShape = new Rectangle(getColorToDraw(), getStartPoint(), getEndPoint(), graphicsForDrawing,
+					getUserName());
 			break;
 		case "Ellipse":
-			paintingShape = new Ellipse(getColorToDraw(), getStartPoint(), getEndPoint(), graphicsForDrawing,getUserName());
+			paintingShape = new Ellipse(getColorToDraw(), getStartPoint(), getEndPoint(), graphicsForDrawing,
+					getUserName());
 			break;
 		case "Square":
-			paintingShape = new Square(getColorToDraw(), getStartPoint(), getEndPoint(), graphicsForDrawing,getUserName());
+			paintingShape = new Square(getColorToDraw(), getStartPoint(), getEndPoint(), graphicsForDrawing,
+					getUserName());
 			break;
 		case "Line":
-			paintingShape = new Line(getColorToDraw(), getStartPoint(), getEndPoint(), graphicsForDrawing,getUserName());
+			paintingShape = new Line(getColorToDraw(), getStartPoint(), getEndPoint(), graphicsForDrawing,
+					getUserName());
 			// g.drawLine(startPoint.getX(), startPoint.getY(), endPoint.getX(),
 			// endPoint.getY());
 			break;
@@ -240,6 +252,5 @@ public class PaintPanel extends JPanel {
 		}
 		return paintingShape;
 	}
-
 
 }
