@@ -2,6 +2,7 @@ package dataBase;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Sql {
 
@@ -63,6 +64,37 @@ public class Sql {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	public ArrayList<String[]> getObjectElements(String userName) {
+		System.out.println(userName);
+		ArrayList<String[]> rslt = new ArrayList<>();
+		String[] result = new String[9];
+//		String sql = "select * from `paintdb`.`object` where `user_id` = (select id from `paintdb`.`user` where username= '" + userName + "') ORDER BY `order` ASC;";
+		String sql = "select  object.*,user.username  from user inner join object on user.id = object.user_id and user.username = '" + userName + "' ORDER BY `object`.`order` asc;";
+		try {
+			ResultSet rs = db.doQuery(sql);
+			while(rs.next()) {
+				result[0] = rs.getString("type");
+				result[1] = rs.getString("color");
+				result[2] = rs.getString("fill");
+				result[3] = rs.getString("x1");
+				result[4] = rs.getString("y1");
+				result[5] = rs.getString("x2");
+				result[6] = rs.getString("y2");
+				result[7] = rs.getString("order");
+				result[8] = rs.getString("username");
+				rslt.add(result);
+				result = new String[9];
+				
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return rslt;
 	}
 
 }

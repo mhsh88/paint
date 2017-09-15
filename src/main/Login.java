@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
 import loginCheck.LoginCheck;
@@ -68,7 +69,9 @@ public class Login extends JFrame {
 		JLabel lblPassWord = new JLabel("Pass Word:");
 		panel_2.add(lblPassWord);
 		
-		txtPassword = new JTextField();
+		
+		txtPassword = new JPasswordField();
+		
 		panel_2.add(txtPassword);
 		txtPassword.setColumns(10);
 		

@@ -1,25 +1,13 @@
 package paintPanel;
 
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.image.ImageObserver;
-import java.text.AttributedCharacterIterator;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
-import javax.swing.RepaintManager;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.sun.corba.se.spi.orbutil.fsm.FSM;
-import com.sun.corba.se.spi.orbutil.fsm.Input;
-
 import component.Circle;
 import component.Ellipse;
 import component.Line;
@@ -27,8 +15,6 @@ import component.Point;
 import component.Rectangle;
 import component.Shape;
 import component.Square;
-import component.TestShape;
-import createShape.ShapeCreator;
 import dataBase.Sql;
 import dataBase.changeToObject.ChangeObject;
 import main.MainFrame;
@@ -43,12 +29,13 @@ public class PaintPanel extends JPanel {
 	private Color colorToDraw = MainFrame.getColor();
 	private String userName;
 	private Sql sql = new Sql();
+	private ChangeObject changeObject = new ChangeObject();
+	ArrayList<String[]> lastList;
+	private ArrayList<Shape> graphics = new ArrayList<>();
 
 	public String getUserName() {
 		return userName;
 	}
-
-	private ArrayList<Shape> graphics = new ArrayList<>();
 
 	public void clearShapeList(String userName) {
 		graphics.clear();
@@ -88,16 +75,23 @@ public class PaintPanel extends JPanel {
 	private static final long serialVersionUID = -7779958891210294697L;
 
 	public PaintPanel(String userName) {
-		this();
-		this.userName = userName;
+		super();
+
+		init(userName);
+
+		
+
 	}
 
-	public PaintPanel() {
+	private void init(String userName) {
+		this.userName = userName;
+		
 		super.setBackground(Color.white);
 		setStartPoint(new Point(0, 0));
 		setEndPoint(new Point(0, 0));
-
 		initialize();
+		
+		
 
 	}
 
@@ -134,8 +128,13 @@ public class PaintPanel extends JPanel {
 			}
 		});
 		super.addMouseListener(new MouseAdapter() {
+
+			private ArrayList<String[]> lastList;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				this.lastList = sql.getObjectElements(getUserName());
+				createShapeFromDatabase(this.lastList);
 			}
 
 			@Override
@@ -144,6 +143,7 @@ public class PaintPanel extends JPanel {
 				setColorToDraw(MainFrame.getColor());
 				// setEndPoint(new Point(e.getX(), e.getY()));
 				graphicsForDrawing = getGraphics();
+
 			}
 
 			@Override
@@ -186,6 +186,8 @@ public class PaintPanel extends JPanel {
 			}
 
 		});
+		
+
 	}
 
 	@Override
@@ -207,6 +209,7 @@ public class PaintPanel extends JPanel {
 		// g.drawArc(startPoint.getX(), startPoint.getY(), endPoint.getX(),
 		// endPoint.getY(), 0, 360);
 		// repaint();
+		
 
 	}
 
@@ -252,5 +255,20 @@ public class PaintPanel extends JPanel {
 		}
 		return paintingShape;
 	}
+	
+	private void createShapeFromDatabase(ArrayList<String[]> lastList2) {
+
+		for (String[] objectString : lastList2) {
+			try {
+				graphics.add(changeObject.setObject(objectString, super.getGraphics()));
+			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	
 
 }
